@@ -2,12 +2,14 @@
 #from sys import argv
 from datetime import date
 from locale import LC_ALL, setlocale
+from re import match
 from calendar import day_abbr, monthcalendar
 
 setlocale(LC_ALL, '')
 
 def is_now (_day, _today, _color, _default):
-    if _day.isdecimal() or _day[-1].isdecimal():
+    _pattern = '^[123 ][0-9]$'
+    if match(_pattern, _day):
         if int(_day) == _today:
             return f'{_color}{_day}{_default}'
         else:
