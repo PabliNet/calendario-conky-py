@@ -8,17 +8,17 @@
 
 ### Ingresar al directorio:
 
-`cd calendario-conky-py`
+`$ cd calendario-conky-py`
 
 ### Crear el directorio ~/.local/share/conky:
 
-`mkdir -P ~/.local/share/conky`
+`$ mkdir -P ~/.local/share/conky`
 
 ### Copiar los archivos cal.py y concal:
 
-`cp {cal.py,concal} ~/.local/share/conky`
+`$ cp {cal.py,concal} ~/.local/share/conky`
 
-### El código en ~/.conkyrc
+### El código en ~/.conkyrc:
 ~~~
 conky.text = [[
 ${execp ~/.local/share/conky/concal '«color de los días»' '«color día actual»'}
