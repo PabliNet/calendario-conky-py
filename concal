@@ -2,14 +2,22 @@
 from sys import argv, exit
 from cal import days_name, is_now, month, now, today, weeks_to_str
 
-if len(argv) == 1:
-    argv.extend(3 * ['$color'])
-elif len(argv) == 2:
-    argv.extend(2 * ['$color'])
-elif len(argv) == 3:
+#if len(argv) == 1:
+#    argv.extend(3 * ['$color'])
+#elif len(argv) == 2:
+#    argv.extend(2 * ['$color'])
+#elif len(argv) == 3:
+#    argv.append('$color')
+#elif len(argv) > 4:
+#    exit(1)
+len_param = 5 - len(argv)
+if len_param > 1:
+    argv.extend(len_param * ['$color'])
+elif len_param == 1:
     argv.append('$color')
-elif len(argv) > 4:
-    exit(1)
+elif len_param < 0:
+    print ('Demasiados parámetros…')
+    exit(0)
 
 params = argv[1:]
 spaces = 0
@@ -18,7 +26,7 @@ if params[-1].isdecimal():
     spaces = int(params[-1])
     params = params[:-1]
 
-names, mark, default = params
+month_year_hr, names, mark, default = params
 
 month = weeks_to_str('--', month)
 
@@ -30,9 +38,10 @@ month[-1][-1] = month[-1][-1] + '${color}'
 for i, w in enumerate(month):
     month[i] = [is_now(d, today, mark, f'{default}') for d in month[i]]
 month.insert(0, days_name)
-print (now.strftime('%B %Y').title() + f' $hr{default}')
+month_year = now.strftime('%B %Y').title() + f' $hr{default}'
+print (month_year_hr + month_year)
 for i, w in enumerate(month):
     if i == 0:
-        print (f'$alignc{names}{"  ".join(w)}{default}')
+        print ('${alignc}' + names + "  ".join(w) + default)
     else:
             print ('${alignc}' + '  '.join(w))
