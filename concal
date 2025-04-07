@@ -2,24 +2,22 @@
 from sys import argv, exit
 from cal import days_name, is_now, month, now, today, weeks_to_str
 
-#if len(argv) == 1:
-#    argv.extend(3 * ['$color'])
-#elif len(argv) == 2:
-#    argv.extend(2 * ['$color'])
-#elif len(argv) == 3:
-#    argv.append('$color')
-#elif len(argv) > 4:
-#    exit(1)
-len_param = 5 - len(argv)
+params = argv[1:]
+for i, v in enumerate(params):
+    if v[:7] + v[-1:] == '${font }':
+        font = v
+        params.pop(i)
+        break
+
+len_param = 4 - len(params)
 if len_param > 1:
-    argv.extend(len_param * ['$color'])
+    params.extend(len_param * ['$color'])
 elif len_param == 1:
-    argv.append('$color')
+    params.append('$color')
 elif len_param < 0:
     print ('Demasiados parámetros…')
     exit(0)
 
-params = argv[1:]
 spaces = 0
 
 if params[-1].isdecimal():
@@ -38,10 +36,13 @@ month[-1][-1] = month[-1][-1] + '${color}'
 for i, w in enumerate(month):
     month[i] = [is_now(d, today, mark, f'{default}') for d in month[i]]
 month.insert(0, days_name)
+if 'font' in locals():
+    month[0][0] = f'{font}{month[0][0]}'
+    month[-1][-1] = month[-1][-1] + '$font'
 month_year = now.strftime('%B %Y').title() + f' $hr{default}'
 print (month_year_hr + month_year)
 for i, w in enumerate(month):
     if i == 0:
         print ('${alignc}' + names + "  ".join(w) + default)
     else:
-            print ('${alignc}' + '  '.join(w))
+        print ('${alignc}' + '  '.join(w))
