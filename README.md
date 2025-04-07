@@ -21,14 +21,14 @@
 ### El código en ~/.conkyrc:
 ~~~
 conky.text = [[
-${execp ~/.local/share/conky/concal '«color año, mes y $hr»' '«color de los días»' '«color día actual» «color de los días»'}
+${execp ~/.local/share/conky/concal '«color año, mes y $hr»' '«color de los días»' '«color día actual» «color de los días» «tipografía»'}
 ]]
 ~~~
 
 #### Ejemplo:
 ~~~
 conky.text = [[
-${execp ~/.local/share/conky/concal '${color gold}' '${color yellow} ${color orange}'}
+${execp ~/.local/share/conky/concal '${color gold}' '${color yellow} ${color orange} ${font Monospace:size=10:weight=bold}'}
 ]]
 ~~~
 
