@@ -2,12 +2,16 @@
 from sys import argv, exit
 from cal import days_name, is_now, month, now, today, weeks_to_str
 
+show_month = True
 params = argv[1:]
-for i, v in enumerate(params):
+for v in reversed(params):
     if v[:7] + v[-1:] == '${font }':
         font = v
-        params.pop(i)
-        break
+        params.remove(v)
+    if v == '--no-month':
+        show_month = False
+        params.insert(0, '')
+        params.remove(v)
 
 len_param = 4 - len(params)
 if len_param > 1:
@@ -39,8 +43,9 @@ month.insert(0, days_name)
 if 'font' in locals():
     month[0][0] = f'{font}{month[0][0]}'
     month[-1][-1] = month[-1][-1] + '$font'
-month_year = now.strftime('%B %Y').title() + f' $hr{default}'
-print (month_year_hr + month_year)
+if show_month:
+    month_year = now.strftime('%B %Y').title() + f' $hr{default}'
+    print (month_year_hr + month_year)
 for i, w in enumerate(month):
     if i == 0:
         print ('${alignc}' + names + "  ".join(w) + default)
